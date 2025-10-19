@@ -15,18 +15,24 @@ function App() {
   function goToFlowBuilder() {
     // Placeholder for navigation logic to flow builder
     console.log("Navigating to flow builder...");
-     navigate("/flow-builder");
+     navigate("/module/flow-builder");
   }
 
   function goToHome() {
     console.log("Navigating to Home...");
 
-    navigate("/home");
+    navigate("/module/home");
+  }
+
+  function goToPlaygroundGames() {
+    console.log("Navigating to Playground Games...");
+    // Placeholder for navigation logic to playground games
+    navigate("/module/playground-games");
   }
 
   function goToProfile(){
     console.log("Navigating to Profile...");
-    navigate("/profile", {
+    navigate("/module/profile", {
       state: {
         username: username,
         country: country,
@@ -57,13 +63,16 @@ function App() {
           count is {count}
         </button>
         <button onClick={() => goToHome()}>
-          to Home
+          HomePage
         </button>
         <button onClick={() => goToFlowBuilder()}>
-          to flow builder
+          flow builder
         </button>
         <button onClick={() => goToProfile()}>
-          to Profile
+          Profile
+        </button>
+        <button onClick={() => goToPlaygroundGames()}>
+          Playground games
         </button>
        </div>
         <p>

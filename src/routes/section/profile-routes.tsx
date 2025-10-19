@@ -1,9 +1,9 @@
 import type { RouteObject } from "react-router-dom";
-import ProfileModule from "../../profile";
+import ProfileModule from "../../module/profile";
 
 export const profileRoute: RouteObject[] = [
     {
-        path: "/profile",
+        path: "/module/profile",
         element: <ProfileModule />
     }
 ];
