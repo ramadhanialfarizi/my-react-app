@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import FlowComponent from "./component/flow-diagram";
+import FlowComponent from "./component/flow-component";
 
 function FlowBuilderComponent() {
     const navigate = useNavigate();
