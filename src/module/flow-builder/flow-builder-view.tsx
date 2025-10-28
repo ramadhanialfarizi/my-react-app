@@ -19,11 +19,11 @@ function FlowBuilderComponent() {
 
             {/* <FlowComponent /> */}
 
-            {/* <FlowComponent/> */}
+            <FlowComponent/>
 
             {/* <FlowBuilderResearch/> */}
 
-            <FlowBuilderParent/>
+            {/* <FlowBuilderParent/> */}
         </div>
     );    
 }

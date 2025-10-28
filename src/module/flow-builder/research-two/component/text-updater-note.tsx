@@ -11,9 +11,8 @@ export function TextUpdaterNote() {
             <div>
                 <label htmlFor="text">Text:</label>
                 <input type="text" name="text" onChange={onChange} className="nodrag"/>
-                <Handle type="source" position={Position.Top}/>
-                <Handle type="target" position={Position.Right} id="A"/>
-                <Handle type="target" position={Position.Bottom} id="B"/>
+                <Handle type="source" position={Position.Bottom} id="source"/>
+                <Handle type="target" position={Position.Top} id="target"/>
             </div>
         </div>
     )

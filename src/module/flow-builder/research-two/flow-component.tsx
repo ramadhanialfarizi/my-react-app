@@ -4,46 +4,26 @@ import {useState, useCallback} from "react";
 import '@xyflow/react/dist/style.css';
 import { TextUpdaterNote } from "./component/text-updater-note";
 
-const initialNodes = [
+// generate uid package
+import { v4 as uuidv4 } from 'uuid';
+
+let initialNodes = [
     {
         id: 'n1',
         position: { x: 0, y: 0 },
         data: { label: 'Node 1' },
         type: 'input',
     }, 
-    {
-        id: 'n2',
-        position: { x: 100, y: 100 },
-        data: { label: 'Node 2' },
-    },
-    {
-        id: 'n3',
-        type: 'textUpdater',
-        position: { x: 100, y: 200 },
-        data: { value: 123 },
-    }
 ]
 
 const nodeTypes = {
     textUpdater: TextUpdaterNote,
 }
 
-const initialEdges = [
-    {
-        id: 'n1-n2',
-        source: 'n1',
-        target: 'n2',
-        type: 'step',
-        label: 'connect',
-    },
-    {
-        id: 'n2-n3',
-        source: 'n2',
-        target: 'n3',
-        type: 'step',
-        label: 'connect',
-    },
-]
+let nodeId: string = "";
+// let edgeId: string = "";
+
+let initialEdges: any[] = []
 
 export default function FlowComponent() {
 
@@ -56,6 +36,42 @@ export default function FlowComponent() {
     // Handling Connect Event
     const onConnect = useCallback((params: any) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),[],); 
 
+
+    function addNode(event: any, node: any) {
+        console.log('node click', node.id);
+        if(nodeId == "") {
+            nodeId = node.id;
+        }
+
+        let uniqueId = uuidv4();
+        let targetNodeId = `node-${uniqueId}`;
+        let edgeId = `edge-${uniqueId}`;
+
+        const newNode = {
+            id: targetNodeId,
+            position: { x: node.position.x + 150, y: node.position.y + 100 },
+            data: { label: `New Node ${targetNodeId}` },
+            type: 'textUpdater',
+        };
+
+        const newEdge = {
+            id: edgeId,
+            source: node.id,
+            target: targetNodeId,
+            type: 'step',
+            label: 'connect',
+        };
+
+        setNodes((previousNodes) => [...previousNodes, newNode]);
+        setEdges((previousEdges) => [...previousEdges, newEdge]);
+
+        nodeId = targetNodeId;
+
+        console.log('added node:', nodes);
+        console.log('added edge:', edges);
+
+    }
+
     return (
         <div style={{ height: '100vh', width: '100vw',}}>
             <ReactFlow 
@@ -67,9 +83,9 @@ export default function FlowComponent() {
             onEdgesChange={onEdgesChange}
             // Handling Connect Event
             onConnect={onConnect}
-
             nodeTypes={nodeTypes}
-            fitView>
+            fitView
+            onNodeClick={addNode}>
                 <Background/>
                 <Controls/>
             </ReactFlow>
