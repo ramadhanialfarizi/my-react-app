@@ -2,6 +2,7 @@ import { ReactFlow, Background, Controls, applyEdgeChanges, applyNodeChanges, ad
 import {useState, useCallback} from "react";
 
 import '@xyflow/react/dist/style.css';
+import { TextUpdaterNote } from "./component/text-updater-note";
 
 const initialNodes = [
     {
@@ -14,14 +15,31 @@ const initialNodes = [
         id: 'n2',
         position: { x: 100, y: 100 },
         data: { label: 'Node 2' },
+    },
+    {
+        id: 'n3',
+        type: 'textUpdater',
+        position: { x: 100, y: 200 },
+        data: { value: 123 },
     }
 ]
+
+const nodeTypes = {
+    textUpdater: TextUpdaterNote,
+}
 
 const initialEdges = [
     {
         id: 'n1-n2',
         source: 'n1',
         target: 'n2',
+        type: 'step',
+        label: 'connect',
+    },
+    {
+        id: 'n2-n3',
+        source: 'n2',
+        target: 'n3',
         type: 'step',
         label: 'connect',
     },
@@ -49,6 +67,8 @@ export default function FlowComponent() {
             onEdgesChange={onEdgesChange}
             // Handling Connect Event
             onConnect={onConnect}
+
+            nodeTypes={nodeTypes}
             fitView>
                 <Background/>
                 <Controls/>

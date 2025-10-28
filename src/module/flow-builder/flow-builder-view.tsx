@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import FlowComponent from "./component/flow-component";
+import FlowComponent from "./research-two/flow-component";
+import FlowBuilderResearch from "./research/flow-builder-research";
+import FlowBuilderParent from "./research/flow-builder-parent";
 
 function FlowBuilderComponent() {
     const navigate = useNavigate();
@@ -10,14 +12,18 @@ function FlowBuilderComponent() {
 
     return (
         <div>
-            <h1>Flow Builder View</h1>
+            {/* <h1>Flow Builder View</h1>
             <button onClick={() => gobackToMainPage()}>
                 back to main page
-            </button>
+            </button> */}
 
             {/* <FlowComponent /> */}
 
-            <FlowComponent/>
+            {/* <FlowComponent/> */}
+
+            {/* <FlowBuilderResearch/> */}
+
+            <FlowBuilderParent/>
         </div>
     );    
 }

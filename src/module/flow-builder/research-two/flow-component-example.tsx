@@ -3,7 +3,7 @@ import { ReactFlow, applyNodeChanges, applyEdgeChanges, addEdge, type NodeChange
 import '@xyflow/react/dist/style.css';
  
 const initialNodes = [
-  { id: 'n1', position: { x: 0, y: 0 }, data: { label: 'Node 1' } },
+  { id: 'n1', position: { x: 0, y: 0 }, data: { label: 'Node 1'} },
   { id: 'n2', position: { x: 0, y: 100 }, data: { label: 'Node 2' } },
   { id: 'n3', position: { x: 0, y: 150 }, data: { label: 'Node 3' } },
 ];
