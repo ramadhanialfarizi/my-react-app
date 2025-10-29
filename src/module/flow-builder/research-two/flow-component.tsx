@@ -6,18 +6,28 @@ import { TextUpdaterNote } from "./component/text-updater-note";
 
 // generate uid package
 import { v4 as uuidv4 } from 'uuid';
+import CardNode from "./component/card-component";
 
 let initialNodes = [
+    // {
+    //     id: 'n1',
+    //     position: { x: 0, y: 0 },
+    //     data: { label: 'Node 1' },
+    //     type: 'input',
+    // }, 
     {
         id: 'n1',
         position: { x: 0, y: 0 },
         data: { label: 'Node 1' },
-        type: 'input',
+        type: 'card',
     }, 
 ]
 
+// const nodeTypes = {
+//     textUpdater: TextUpdaterNote,
+// }
 const nodeTypes = {
-    textUpdater: TextUpdaterNote,
+   card: CardNode,
 }
 
 let nodeId: string = "";
@@ -36,12 +46,17 @@ export default function FlowComponent() {
     // Handling Connect Event
     const onConnect = useCallback((params: any) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),[],); 
 
+    function handleChange(event: any, nodeData: any) {
+       const newValue = event.target.value
+       console.log("value : ", newValue);
+    }
+
 
     function addNode(event: any, node: any) {
-        console.log('node click', node.id);
-        if(nodeId == "") {
-            nodeId = node.id;
-        }
+        console.log('node id', node.id);
+
+        const parentNode = nodes.find((n) => n.id === node.id);
+        if (!parentNode) return;
 
         let uniqueId = uuidv4();
         let targetNodeId = `node-${uniqueId}`;
@@ -49,9 +64,10 @@ export default function FlowComponent() {
 
         const newNode = {
             id: targetNodeId,
-            position: { x: node.position.x + 150, y: node.position.y + 100 },
+            fromId: node.id,
+            position: { x: parentNode.position.x + 150, y: parentNode.position.y + 100 },
             data: { label: `New Node ${targetNodeId}` },
-            type: 'textUpdater',
+            type: 'card',
         };
 
         const newEdge = {
@@ -72,11 +88,24 @@ export default function FlowComponent() {
 
     }
 
+    function deleteNode(event: any, node: any) {
+        
+    }
+
     return (
         <div style={{ height: '100vh', width: '100vw',}}>
             <ReactFlow 
             // initial nodes and edges
-            nodes={nodes} 
+            // nodes={nodes}
+            nodes={nodes.map((n) => ({
+                ...n,
+                data: {
+                ...n.data,
+                onAdd: addNode,
+                onDelete: deleteNode,
+                onChange: handleChange,
+                },
+            }))} 
             edges={edges}
             // Handling Change Event
             onNodesChange={onNodesChange}
@@ -85,7 +114,9 @@ export default function FlowComponent() {
             onConnect={onConnect}
             nodeTypes={nodeTypes}
             fitView
-            onNodeClick={addNode}>
+            // onNodeClick={addNode}
+            
+            >
                 <Background/>
                 <Controls/>
             </ReactFlow>
