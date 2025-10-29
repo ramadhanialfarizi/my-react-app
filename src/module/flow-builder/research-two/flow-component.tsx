@@ -110,6 +110,12 @@ export default function FlowComponent() {
             return removeNodeAndChildren(parentNode.id, prevNodes);
         });
 
+        setEdges((prevEdges) =>
+            prevEdges.filter(
+            (e) => e.source !== node.id && e.target !== node.id
+            )
+        );
+
         console.log('added node:', nodes);
         console.log('added edge:', edges);
     }
